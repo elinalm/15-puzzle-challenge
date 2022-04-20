@@ -10,6 +10,7 @@ export default makeStyles(() => ({
     alignContent: 'center',
     backgroundColor: '#435861',
     flexDirection: 'column',
+    fontFamily: 'Open Sans',
   },
   container: {
     display: 'flex',
@@ -19,5 +20,6 @@ export default makeStyles(() => ({
     backgroundColor: '#607d8b',
     padding: 20,
     maxWidth: 500,
+    fontFamily: 'Open Sans',
   },
 }));

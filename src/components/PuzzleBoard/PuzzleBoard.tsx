@@ -11,9 +11,6 @@ import { SHUFFLE } from '../../utils';
 export const PuzzleBoard = () => {
   const classes = useStyles();
   const { tiles, shuffle, moveTile, win } = useControls();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   useEffect(() => {}, [shuffle]);
 
@@ -47,7 +44,7 @@ export const PuzzleBoard = () => {
         <Button
           color="info"
           variant="contained"
-          style={{ color: 'black' }}
+          style={{ color: 'black', fontFamily: 'Open Sans' }}
           onClick={shuffle}
         >
           {SHUFFLE}
