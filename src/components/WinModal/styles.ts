@@ -6,8 +6,7 @@ export default makeStyles(() => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    height: 200,
+
     backgroundColor: 'white',
     border: '2px solid #000',
     boxShadow: '200',
@@ -17,8 +16,10 @@ export default makeStyles(() => ({
     alignItems: 'center',
     flexDirection: 'column',
   },
+
   button: {
+    fontFamily: 'Open Sans',
+    backgroundColor: '#859AA4',
     color: 'black',
-    width: 150,
   },
 }));

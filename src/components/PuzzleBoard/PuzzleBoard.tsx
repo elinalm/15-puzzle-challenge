@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Button, Paper } from '@mui/material';
-import { experimentalStyled as styled } from '@mui/material/styles';
+import React, { useEffect } from 'react';
+import { Grid, Button } from '@mui/material';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 
-import useStyles from '../styles';
+import useStyles from './styles';
 import { Tile } from '../Tiles/Tile';
 import { TileIndex, useControls } from '../../context/ControlContext';
 import { WinModal } from '../WinModal/WinModal';
 import { SHUFFLE } from '../../utils';
 
 export const PuzzleBoard = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const { tiles, shuffle, moveTile, win } = useControls();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const boardWidth = matches ? 350 : 500;
 
   useEffect(() => {}, [shuffle]);
 
@@ -20,7 +23,13 @@ export const PuzzleBoard = () => {
 
   return (
     <Grid container className={classes.root}>
-      <Grid container className={classes.container} spacing={1} columns={12}>
+      <Grid
+        container
+        width={boardWidth}
+        className={classes.container}
+        spacing={1}
+        columns={12}
+      >
         {tiles.map((item, row) => (
           <React.Fragment key={row}>
             {item.map((tile, column) => (
@@ -39,12 +48,10 @@ export const PuzzleBoard = () => {
         ))}
         {win && <WinModal />}
       </Grid>
-
-      <Grid item style={{ margin: 20 }}>
+      <Grid item className={classes.buttonContainer}>
         <Button
-          color="info"
           variant="contained"
-          style={{ color: 'black', fontFamily: 'Open Sans' }}
+          className={classes.button}
           onClick={shuffle}
         >
           {SHUFFLE}
