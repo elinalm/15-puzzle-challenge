@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   IControlContext,
@@ -6,6 +6,7 @@ import {
   ControlContext,
 } from './context';
 import { IControlState, initialControlState, TileIndex } from './state';
+import { swapPosition } from '../../components/helper';
 
 interface IControlProvider {
   children: React.ReactNode;
@@ -46,7 +47,6 @@ const ControlProvider = ({ children }: IControlProvider) => {
     }
     return shuffledRows;
   };
-
   const victory = () => {
     setControlerState((state) => ({
       ...state,
@@ -56,6 +56,91 @@ const ControlProvider = ({ children }: IControlProvider) => {
         })
       ),
     }));
+  };
+
+  const moveTile = (clicked: TileIndex) => {
+    const updatedTilesArray = [...controlerState.tiles];
+    if (
+      (clicked.row === controlerState.emptyTile.row + 1 &&
+        clicked.column === controlerState.emptyTile.column) ||
+      (clicked.row === controlerState.emptyTile.row - 1 &&
+        clicked.column === controlerState.emptyTile.column)
+    ) {
+      swapPosition(
+        clicked.row,
+        clicked.column,
+        updatedTilesArray,
+        controlerState.emptyTile
+      );
+    }
+    if (
+      (clicked.column === controlerState.emptyTile.column + 1 &&
+        clicked.row === controlerState.emptyTile.row) ||
+      (clicked.column === controlerState.emptyTile.column - 1 &&
+        clicked.row === controlerState.emptyTile.row)
+    ) {
+      swapPosition(
+        clicked.row,
+        clicked.column,
+        updatedTilesArray,
+        controlerState.emptyTile
+      );
+    }
+    if (
+      clicked.column === controlerState.emptyTile.column + 2 &&
+      clicked.row === controlerState.emptyTile.row
+    ) {
+      swapPosition(
+        clicked.row,
+        controlerState.emptyTile.column + 1,
+        updatedTilesArray,
+        controlerState.emptyTile
+      );
+    }
+
+    if (
+      clicked.row === controlerState.emptyTile.row - 2 &&
+      clicked.column === controlerState.emptyTile.column
+    ) {
+      swapPosition(
+        controlerState.emptyTile.row - 1,
+        clicked.column,
+        updatedTilesArray,
+        controlerState.emptyTile
+      );
+    }
+
+    if (
+      clicked.row === controlerState.emptyTile.row + 2 &&
+      clicked.column === controlerState.emptyTile.column
+    ) {
+      swapPosition(
+        controlerState.emptyTile.row + 1,
+        clicked.column,
+        updatedTilesArray,
+        controlerState.emptyTile
+      );
+    }
+
+    if (
+      clicked.column === controlerState.emptyTile.column - 2 &&
+      clicked.row === controlerState.emptyTile.row
+    ) {
+      swapPosition(
+        clicked.row,
+        controlerState.emptyTile.column - 1,
+        updatedTilesArray,
+        controlerState.emptyTile
+      );
+    }
+
+    const emptyRowAndCol = findEmptyTile();
+    setControlerState((state) => ({
+      ...state,
+      tiles: updatedTilesArray,
+      emptyTile: emptyRowAndCol ?? { column: 0, row: 0 },
+    }));
+    victory();
   };
 
   const config: IControlContext = {
@@ -70,52 +155,7 @@ const ControlProvider = ({ children }: IControlProvider) => {
         emptyTile: emptyRowAndCol ?? { row: 0, column: 0 },
       }));
     },
-    moveTile: (clicked: TileIndex) => {
-      const updatedTilesArray = [...controlerState.tiles];
-      if (
-        (clicked.row === controlerState.emptyTile.row + 1 &&
-          clicked.column === controlerState.emptyTile.column) ||
-        (clicked.row === controlerState.emptyTile.row - 1 &&
-          clicked.column === controlerState.emptyTile.column)
-      ) {
-        [
-          updatedTilesArray[clicked.row][clicked.column],
-          updatedTilesArray[controlerState.emptyTile.row][
-            controlerState.emptyTile.column
-          ],
-        ] = [
-          updatedTilesArray[controlerState.emptyTile.row][
-            controlerState.emptyTile.column
-          ],
-          updatedTilesArray[clicked.row][clicked.column],
-        ];
-      }
-      if (
-        (clicked.column === controlerState.emptyTile.column + 1 &&
-          clicked.row === controlerState.emptyTile.row) ||
-        (clicked.column === controlerState.emptyTile.column - 1 &&
-          clicked.row === controlerState.emptyTile.row)
-      ) {
-        [
-          updatedTilesArray[clicked.row][clicked.column],
-          updatedTilesArray[controlerState.emptyTile.row][
-            controlerState.emptyTile.column
-          ],
-        ] = [
-          updatedTilesArray[controlerState.emptyTile.row][
-            controlerState.emptyTile.column
-          ],
-          updatedTilesArray[clicked.row][clicked.column],
-        ];
-      }
-      const emptyRowAndCol = findEmptyTile();
-      setControlerState((state) => ({
-        ...state,
-        tiles: updatedTilesArray,
-        emptyTile: emptyRowAndCol ?? { column: 0, row: 0 },
-      }));
-      victory();
-    },
+    moveTile,
   };
 
   return (
