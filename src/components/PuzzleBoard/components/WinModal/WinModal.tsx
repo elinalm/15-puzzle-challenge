@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Typography, Button, Modal, Box } from '@mui/material';
 
-import { useControls } from '../../context/ControlContext';
-import { PLAY_AGAIN, WIN } from '../../utils';
+import { useControls } from '../../../../context/ControlContext';
+import { PLAY_AGAIN, WIN } from '../../../../utils';
 import useStyles from './styles';
 import { useMediaQuery, useTheme } from '@material-ui/core';
 
