@@ -1,11 +1,11 @@
 import React from 'react';
-import { EmptyTile } from './types';
+import { TileIndex } from './types';
 
 export const swapPosition = (
   row: number,
   column: number,
   updatedTilesArray: string[][],
-  emptyTile: EmptyTile
+  emptyTile: TileIndex
 ) => {
   [
     updatedTilesArray[row][column],

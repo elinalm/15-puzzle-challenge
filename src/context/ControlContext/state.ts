@@ -1,8 +1,4 @@
-export type TileIndex = {
-  row: number;
-  column: number;
-};
-
+import { TileIndex } from './types';
 export interface IControlState {
   tiles: string[][];
   emptyTile: TileIndex;
