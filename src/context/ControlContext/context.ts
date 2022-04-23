@@ -1,11 +1,11 @@
 import React from 'react';
-import { IControlState, initialControlState, TileIndex } from './state';
+import { IControlState, initialControlState } from './state';
+import { TileIndex } from './types';
 
 export interface IControlContext extends IControlState {
   shuffle: () => void;
   moveTile: (tileIndex: TileIndex) => void;
   findEmptyTile: () => void;
-  victory: () => void;
 }
 
 const notImplemented = () => {
@@ -17,7 +17,6 @@ export const initialControlContext: IControlContext = {
   shuffle: notImplemented,
   moveTile: notImplemented,
   findEmptyTile: notImplemented,
-  victory: notImplemented,
 };
 
 export const ControlContext = React.createContext<IControlContext>(
