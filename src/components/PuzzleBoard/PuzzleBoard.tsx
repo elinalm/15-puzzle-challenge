@@ -3,23 +3,21 @@ import { Grid, Button } from '@mui/material';
 import { useMediaQuery, useTheme } from '@material-ui/core';
 
 import useStyles from './styles';
-import { Tile } from '../Tiles/Tile';
-import { TileIndex, useControls } from '../../context/ControlContext';
-import { WinModal } from '../WinModal/WinModal';
+import { useControls } from '../../context/ControlContext';
 import { SHUFFLE } from '../../utils';
+import { Tile, WinModal } from './components';
 
 export const PuzzleBoard = () => {
   const theme = useTheme();
   const classes = useStyles();
-  const { tiles, shuffle, moveTile, win } = useControls();
+  const { tiles, shuffle, win } = useControls();
+
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const boardWidth = matches ? 350 : 500;
 
-  useEffect(() => {}, [shuffle]);
-
-  const positionOfClickedTile = (index: TileIndex) => {
-    moveTile(index);
-  };
+  useEffect(() => {
+    shuffle();
+  }, []);
 
   return (
     <Grid container className={classes.root}>
@@ -40,8 +38,6 @@ export const PuzzleBoard = () => {
                   row: row,
                   column: column,
                 }}
-                shuffle={shuffle}
-                positionOfClickedTile={positionOfClickedTile}
               />
             ))}
           </React.Fragment>
